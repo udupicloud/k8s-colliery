@@ -1,7 +1,9 @@
- #!/bin/bash
+#!/bin/bash
+
 UBUNTU_VERSION=16.04
 K8S_VERSION=1.11.3-00
 node_type=master
+
 #Update all installed packages.
 apt-get update
 apt-get upgrade
@@ -65,3 +67,5 @@ kubectl taint nodes --all node-role.kubernetes.io/master-
 
 #Install Flannel network
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.10.0/Documentation/kube-flannel.yml
+
+echo "Done."
