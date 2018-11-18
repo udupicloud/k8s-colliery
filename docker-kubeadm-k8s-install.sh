@@ -4,9 +4,13 @@ UBUNTU_VERSION=16.04
 K8S_VERSION=1.11.3-00
 node_type=master
 
+echo "Ubuntu version: ${UBUNTU_VERSION}"
+echo "K8s version: ${K8S_VERSION}"
+echo "K8s node type: ${node_type}"
+echo
 #Update all installed packages.
-apt-get update
-apt-get upgrade
+sudo apt-get update
+sudo apt-get upgrade
 
 #if you get an error similar to
 #'[ERROR Swap]: running with swap on is not supported. Please disable swap', disable swap:
