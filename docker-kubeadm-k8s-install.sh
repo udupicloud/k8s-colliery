@@ -1,7 +1,7 @@
 #!/bin/bash
 
-UBUNTU_VERSION=16.04
-K8S_VERSION=1.11.3-00
+UBUNTU_VERSION=20.04.2
+K8S_VERSION=1.21*
 node_type=master
 
 echo "Ubuntu version: ${UBUNTU_VERSION}"
@@ -15,6 +15,7 @@ sudo apt-get upgrade
 #if you get an error similar to
 #'[ERROR Swap]: running with swap on is not supported. Please disable swap', disable swap:
 sudo swapoff -a
+sudo sed -i '/swap.img/s/^/#/g' /etc/fstab
 
 # install some utils
 sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
@@ -24,7 +25,7 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
 if [ $UBUNTU_VERSION == "16.04" ]; then
     sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"
-elif [ $UBUNTU_VERSION == "18.04" ]; then
+elif [ $UBUNTU_VERSION == "20.04.2" ]; then
     sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
 else
     #default tested version
@@ -70,6 +71,6 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubectl taint nodes --all node-role.kubernetes.io/master-
 
 #Install Flannel network
-kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/v0.10.0/Documentation/kube-flannel.yml
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 
 echo "Done."
